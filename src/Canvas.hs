@@ -167,7 +167,8 @@ bodyElement = do
 
   let evMoved = R.updated dynCursor
       evCombined = RD.leftmost [evApply, () <$ evMoved]
+  evDraw <- R.delay 0.001 evCombined
 
-  _ <- CDyn.drawWithCx dyn2D (action cells <$> dynCursor) evCombined
+  _ <- CDyn.drawWithCx dyn2D (action cells <$> dynCursor) evDraw
 
   return ()
