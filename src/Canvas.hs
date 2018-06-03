@@ -163,11 +163,9 @@ bodyElement = do
     , moveDown  cells canvasH canvasW <$ evDown
     , moveUp    cells canvasH canvasW <$ evUp
     , moveRight cells canvasH canvasW <$ evRight
+    , id <$ evApply
     ]
 
-  let evMoved = R.updated dynCursor
-      evCombined = RD.leftmost [evApply, () <$ evMoved]
-
-  _ <- CDyn.drawWithCx dyn2D (action cells <$> dynCursor) evCombined
+  _ <- CDyn.drawWithCx dyn2D (action cells <$> dynCursor) (() <$ R.updated dynCursor)
 
   return ()
